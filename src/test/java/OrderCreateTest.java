@@ -1,7 +1,12 @@
+import dto.Order;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
@@ -9,10 +14,19 @@ import static org.hamcrest.Matchers.notNullValue;
 @RunWith(Parameterized.class)
 public class OrderCreateTest extends AbstractCourierCreateTest {
 
-    private final String order;
+    private final Order order;
 
-    public OrderCreateTest(String order) {
-        this.order = order;
+    public OrderCreateTest(List<String> color) {
+        this.order = new Order()
+                .setFirstName("Naruto")
+                .setLastName("Uchiha")
+                .setAddress("Konoha, 142 apt.")
+                .setMetroStation(4)
+                .setPhone("+7 800 355 35 35")
+                .setRentTime(5)
+                .setDeliveryDate(LocalDate.now())
+                .setComment("Saske, come back to Konoha")
+                .setColor(color);
     }
 
     @Test
@@ -42,57 +56,9 @@ public class OrderCreateTest extends AbstractCourierCreateTest {
     @Parameterized.Parameters
     public static Object[] getCount() {
         return new Object[]{
-                "{\n" +
-                        "    \"firstName\": \"Naruto\",\n" +
-                        "    \"lastName\": \"Uchiha\",\n" +
-                        "    \"address\": \"Konoha, 142 apt.\",\n" +
-                        "    \"metroStation\": 4,\n" +
-                        "    \"phone\": \"+7 800 355 35 35\",\n" +
-                        "    \"rentTime\": 5,\n" +
-                        "    \"deliveryDate\": \"2020-06-06\",\n" +
-                        "    \"comment\": \"Saske, come back to Konoha\",\n" +
-                        "    \"color\": []\n" +
-                        "}",
-                "{\n" +
-                        "    \"firstName\": \"Naruto\",\n" +
-                        "    \"lastName\": \"Uchiha\",\n" +
-                        "    \"address\": \"Konoha, 142 apt.\",\n" +
-                        "    \"metroStation\": 4,\n" +
-                        "    \"phone\": \"+7 800 355 35 35\",\n" +
-                        "    \"rentTime\": 5,\n" +
-                        "    \"deliveryDate\": \"2020-06-06\",\n" +
-                        "    \"comment\": \"Saske, come back to Konoha\",\n" +
-                        "    \"color\": [\n" +
-                        "        \"BLACK\"\n" +
-                        "    ]\n" +
-                        "}",
-                "{\n" +
-                        "    \"firstName\": \"Naruto\",\n" +
-                        "    \"lastName\": \"Uchiha\",\n" +
-                        "    \"address\": \"Konoha, 142 apt.\",\n" +
-                        "    \"metroStation\": 4,\n" +
-                        "    \"phone\": \"+7 800 355 35 35\",\n" +
-                        "    \"rentTime\": 5,\n" +
-                        "    \"deliveryDate\": \"2020-06-06\",\n" +
-                        "    \"comment\": \"Saske, come back to Konoha\",\n" +
-                        "    \"color\": [\n" +
-                        "        \"GREY\"\n" +
-                        "    ]\n" +
-                        "}",
-                "{\n" +
-                        "    \"firstName\": \"Naruto\",\n" +
-                        "    \"lastName\": \"Uchiha\",\n" +
-                        "    \"address\": \"Konoha, 142 apt.\",\n" +
-                        "    \"metroStation\": 4,\n" +
-                        "    \"phone\": \"+7 800 355 35 35\",\n" +
-                        "    \"rentTime\": 5,\n" +
-                        "    \"deliveryDate\": \"2020-06-06\",\n" +
-                        "    \"comment\": \"Saske, come back to Konoha\",\n" +
-                        "    \"color\": [\n" +
-                        "        \"BLACK\",\n" +
-                        "        \"GREY\"\n" +
-                        "    ]\n" +
-                        "}"
-        };
+                Collections.emptyList(),
+                List.of("BLACK"),
+                List.of("GREY"),
+                List.of("BLACK", "GREY")};
     }
 }
